@@ -32,7 +32,8 @@ typedef enum {
 	VALUE
 } TState;
 
-void ReadFromFile(vector <TTerm> *arr) {
+size_t ReadFromFile(vector <TTerm> *arr) {
+	size_t cnt = 0;
 	arr->resize(0);
 
 	ifstream fin("in.txt");
@@ -62,6 +63,7 @@ void ReadFromFile(vector <TTerm> *arr) {
 					term_tmp.Clear();
 					state = NAME;
 					empty = true;
+					cnt++;
 				} else {
 					term_tmp.Value += (char) ch;
 				}
@@ -72,6 +74,8 @@ void ReadFromFile(vector <TTerm> *arr) {
 		arr->push_back(term_tmp);
 	}
 	fin.close();
+
+	return cnt;
 }
 
 void pause(void)
@@ -90,8 +94,10 @@ int main(void)
 	vector <TTerm> terms(0);
 
 	cout << "Import from file:" << endl;
-	ReadFromFile(&terms);
-	cout << "OK" << endl;
+	size_t import_cnt = ReadFromFile(&terms);
+	cout << "[OK]" << endl << endl;
+	cout << "Imported " << import_cnt << " terms" << endl << endl;
+	cout << "OKay, let's begin FAN :)" << endl;
 
 	//cout << words[0][1] << endl;
 	int numold = -1;
